@@ -47,6 +47,7 @@ public class FlujoPasos extends AppCompatActivity {
     private int remove;
     private double time;
     private ArrayAdapter <String> ad;
+    private String nombreC="";
 
 
 
@@ -65,9 +66,12 @@ public class FlujoPasos extends AppCompatActivity {
         lv1 =(ListView)findViewById(R.id.Pasos);
         lv1.setVisibility(View.GONE);
 
-
+        Bundle extras=getIntent().getExtras();
+        if(extras!=null){
+            nombreC=extras.getString("nombreC");
+        }
         try {
-            new ObtenerOrdenes().execute(new URL("http://192.168.43.116:9080/Proyecto2/central/chef/orden"));
+            new ObtenerOrdenes().execute(new URL("http://192.168.1.62:9080/Proyecto2/central/chef/orden"));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -145,7 +149,6 @@ public class FlujoPasos extends AppCompatActivity {
                 // Activar método POST
                 con.setDoOutput(true);
 
-                String nombreC = "alfredo";
                 con.setFixedLengthStreamingMode(nombreC.getBytes().length);
                 con.setRequestProperty("Content-Type", "application/json");
 

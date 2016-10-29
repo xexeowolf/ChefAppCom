@@ -65,6 +65,7 @@ public class navigation extends AppCompatActivity
     String [] menuspf,menuspc,menuspv,menuspg,menuspl,invspf,invspc,invspv,invspg,invspl;
     JSONArray paquete=new JSONArray();
     JSONObject objetoJSON=new JSONObject();
+    String nombreC;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,19 +86,21 @@ public class navigation extends AppCompatActivity
 
         nomPerfil=(TextView)findViewById(R.id.nomPerfil);
         correo=(TextView)findViewById(R.id.correoPerfil);
-        foto=(ImageView)findViewById(R.id.imagePerfil);
-        Bundle extras=getIntent().getExtras();
+        //foto=(ImageView)findViewById(R.id.imagePerfil);
+        /*Bundle extras=getIntent().getExtras();
         if(extras!=null){
             try {
-                JSONObject infoPerfil=new JSONObject(extras.getString("objeto"));
-                correo.setText(infoPerfil.get("emailAddress").toString());
-                nomPerfil.setText(infoPerfil.get("formattedName").toString());
-                Picasso.with(this).load(infoPerfil.getString("pictureUrl"))
-                        .into(foto);
+                //JSONObject infoPerfil=new JSONObject(extras.getString("objeto"));
+                //correo.setText(infoPerfil.get("emailAddress").toString());
+                //nomPerfil.setText(infoPerfil.get("formattedName").toString());
+                //nombreC=(String)nomPerfil.getText();
+                //Picasso.with(foto.getContext()).load(infoPerfil.getString("pictureUrl"))
+                 //       .into(foto);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }
+            //Toast.makeText(this, extras.getString("objeto"), Toast.LENGTH_LONG).show();
+        }*/
         tvtf = (TextView) findViewById(R.id.tvtf);
         tvtf.setVisibility(View.GONE);
         tvtc = (TextView) findViewById(R.id.tvtc);
@@ -165,16 +168,16 @@ public class navigation extends AppCompatActivity
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
             if (networkInfo != null && networkInfo.isConnected()) {
-                new GetMenuInfo().execute(new URL("http://192.168.43.116:9080/Proyecto2/central/chef/menu/ensaladas"));
-                new GetMenuInfo().execute(new URL("http://192.168.43.116:9080/Proyecto2/central/chef/menu/sopas"));
-                new GetMenuInfo().execute(new URL("http://192.168.43.116:9080/Proyecto2/central/chef/menu/platos"));
-                new GetMenuInfo().execute(new URL("http://192.168.43.116:9080/Proyecto2/central/chef/menu/bebidas"));
-                new GetMenuInfo().execute(new URL("http://192.168.43.116:9080/Proyecto2/central/chef/menu/postres"));
-                new GetInventarioInfo().execute(new URL("http://192.168.43.116:9080/Proyecto2/central/chef/inventario/frutas"));
-                new GetInventarioInfo().execute(new URL("http://192.168.43.116:9080/Proyecto2/central/chef/inventario/granos"));
-                new GetInventarioInfo().execute(new URL("http://192.168.43.116:9080/Proyecto2/central/chef/inventario/carnes"));
-                new GetInventarioInfo().execute(new URL("http://192.168.43.116:9080/Proyecto2/central/chef/inventario/lacteos"));
-                new GetInventarioInfo().execute(new URL("http://192.168.43.116:9080/Proyecto2/central/chef/inventario/vegetales"));
+                new GetMenuInfo().execute(new URL("http://192.168.1.62:9080/Proyecto2/central/chef/menu/ensaladas"));
+                new GetMenuInfo().execute(new URL("http://192.168.1.62:9080/Proyecto2/central/chef/menu/sopas"));
+                new GetMenuInfo().execute(new URL("http://192.168.1.62:9080/Proyecto2/central/chef/menu/platos"));
+                new GetMenuInfo().execute(new URL("http://192.168.1.62:9080/Proyecto2/central/chef/menu/bebidas"));
+                new GetMenuInfo().execute(new URL("http://192.168.1.62:9080/Proyecto2/central/chef/menu/postres"));
+                new GetInventarioInfo().execute(new URL("http://192.168.1.62:9080/Proyecto2/central/chef/inventario/frutas"));
+                new GetInventarioInfo().execute(new URL("http://192.168.1.62:9080/Proyecto2/central/chef/inventario/granos"));
+                new GetInventarioInfo().execute(new URL("http://192.168.1.62:9080/Proyecto2/central/chef/inventario/carnes"));
+                new GetInventarioInfo().execute(new URL("http://192.168.1.62:9080/Proyecto2/central/chef/inventario/lacteos"));
+                new GetInventarioInfo().execute(new URL("http://192.168.1.62:9080/Proyecto2/central/chef/inventario/vegetales"));
             } else {
                 Toast.makeText(this, "Error de conexion", Toast.LENGTH_LONG).show();
             }
@@ -208,7 +211,7 @@ public class navigation extends AppCompatActivity
             objetoJSON.put("nombre",String.valueOf(ingred.getText()));
             objetoJSON.put("categoria",String.valueOf(spingred.getSelectedItem()));
             try {
-                new EnviarDatosInv().execute(new URL("http://192.168.43.116:9080/Proyecto2/central/chef/inventario/agregar"));
+                new EnviarDatosInv().execute(new URL("http://192.168.1.62:9080/Proyecto2/central/chef/inventario/agregar"));
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }finally{
@@ -328,7 +331,9 @@ public class navigation extends AppCompatActivity
             //Cargar en los spinner los datos correspondientes.
 
         } else if (id == R.id.nav_slideshow) {
-            startActivity(new Intent(this,FlujoPasos.class));
+            Intent flujopasos=new Intent(this,FlujoPasos.class);
+            flujopasos.putExtra("nombreC","alfredo");//nombreC
+            startActivity(flujopasos);
 
         } else if (id == R.id.nav_manage) {
 
@@ -355,7 +360,7 @@ public class navigation extends AppCompatActivity
                         e.printStackTrace();
                     }
                     try {
-                        new EnviarDatosMenu().execute(new URL("http://192.168.43.116:9080/Proyecto2/central/chef/menu/agregar"));
+                        new EnviarDatosMenu().execute(new URL("http://192.168.1.62:9080/Proyecto2/central/chef/menu/agregar"));
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
